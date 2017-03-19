@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import style from './modal.scss';
 import classNames from 'classnames';
+import ModalHeader from './ModalHeader';
+import ModalFooter from './ModalFooter';
 
 export default class Modal extends Component {
     static defaultProps = {
@@ -36,7 +38,9 @@ export default class Modal extends Component {
         this.modal = (
             <div className={wrapperClassName} onClick={this.onMaskClickHandler.bind(this)}>
                 <div className={style.modal_container} onClick={this.onModalClickHandler.bind(this)}>
+                    <ModalHeader title={this.props.title} cancelHandler={this.defaultCancelHandler.bind(this)}/>
                     {this.props.children}
+                    <ModalFooter comfirmHandler={this.defaultComfirmHandler.bind(this)} cancelHandler={this.defaultCancelHandler.bind(this)}/>
                 </div>
             </div>
         )

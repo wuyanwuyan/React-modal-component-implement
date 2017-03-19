@@ -22,7 +22,7 @@ export default class MainView extends React.Component{
                 <button onClick={()=>(this.onBtnClick())}>
                     show modal
                 </button>
-                <Modal open={this.state.open}>
+                <Modal open={this.state.open} title="dialog Name">
                     <Modal01/>
                 </Modal>
             </div>

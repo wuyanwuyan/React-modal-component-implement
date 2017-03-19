@@ -9,6 +9,13 @@ export default class ModalHeader extends React.Component {
                 ×
             </button>
         </div>);
+
+
+        // <div className={style.modal_footer}>
+        //     <button onClick={this.comfirmlHandler.bind(this)} className={style.modal_comfirm_btn}> comfirm </button>
+        //     <button onClick={this.cancelHandler.bind(this)} className={style.modal_comfirm_btn}> close </button>
+        // </div>
+        // </div>
     }
 
 }
