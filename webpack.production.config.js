@@ -61,7 +61,7 @@ module.exports = {
             },  ////图片文件使用 url-loader 来处理，小于8kb的直接转为base64
             {
                 test: /\.(scss|css)$/,
-                loader: ExtractTextPlugin.extract("style", ["css","postcss","sass"])
+                loader: ExtractTextPlugin.extract("style", ["css?modules&localIdentName=[local]_[hash:5]","postcss","sass"])
             },
             {
                 test: /\.woff/,

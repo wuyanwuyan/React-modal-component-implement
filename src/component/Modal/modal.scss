@@ -1,0 +1,30 @@
+.modal_wrapper{
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  overflow:scroll;
+
+  &.in{
+    display: block;
+  }
+}
+
+.modal_container{
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  transition: all 0.3s linear;
+  transform: translateY(20px);
+
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+  box-shadow: 0 3px 9px rgba(0,0,0,.5);
+
+  &.in{
+    transform: translateY(20px);
+  }
+}

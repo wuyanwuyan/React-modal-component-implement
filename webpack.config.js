@@ -56,8 +56,8 @@ module.exports = {
             },  ////图片文件使用 url-loader 来处理，小于8kb的直接转为base64
             {
                 test: /\.(scss|css)$/,
-                loader: ExtractTextPlugin.extract("style", ["css?sourceMap","postcss","sass?sourceMap"])  //加载异步chunk，无法抽取css时，就使用style-loader，将其嵌入到页面的style标签
-                // loaders: ["style-loader", "css-loader?sourceMap","postcss", "sass-loader?sourceMap"]   // 需要CSS modules？
+                loader: ExtractTextPlugin.extract("style", ["css?modules&localIdentName=[local]_[hash:3]&sourceMap","postcss","sass?sourceMap"])  //加载异步chunk，无法抽取css时，就使用style-loader，将其嵌入到页面的style标签
+                // loaders: ["style-loader", "css-loader?modules!sourceMap","postcss", "sass-loader?sourceMap"]   // 需要CSS modules？
             },  // 将CSS文件提取出来
             {
                 test: /\.woff/,
