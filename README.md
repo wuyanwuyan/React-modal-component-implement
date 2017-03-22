@@ -1,2 +1,2 @@
 # React-modal-mini-implement
-react modal dialog
+How to implement Modal dialog using react
