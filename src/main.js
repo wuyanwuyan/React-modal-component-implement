@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // 引入React-Router模块
-import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import {Router, Route, browserHistory,hashHistory, IndexRoute} from 'react-router';
 import {createStore} from 'redux';
 // 引入redux模块
 
@@ -23,7 +23,6 @@ class Init extends React.Component {
     render() {
         return (
             <div>
-                <MainView />
                 {this.props.children}
             </div>
         )
@@ -38,9 +37,9 @@ let store = createStore(reducer, initState);
 // 配置路由，并将路由注入到id为init的DOM元素中  // redux和react连接
 ReactDOM.render((
     <Provider store={store}>
-        <Router history={browserHistory}>
+        <Router history={hashHistory}>
             <Route path="/" component={Init}>
-
+                <IndexRoute component={MainView}/>
             </Route>
         </Router>
     </ Provider >

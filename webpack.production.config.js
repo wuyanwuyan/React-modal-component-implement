@@ -18,7 +18,7 @@ var indexHtmlConfig = {
     hash: false    //为静态资源生成hash值 url后面？+hash
 }
 
-const CDN_URL = "/";//http://localhost:8080";
+const CDN_URL = "./";//https://wuyanwuyan.github.io/react_modal/;
 
 module.exports = {
     entry: {
