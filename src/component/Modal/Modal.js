@@ -10,37 +10,48 @@ export default class Modal extends Component {
         open: false
     };
 
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.minimum = 0.2;
         this.state = {
-            open:false
+            open: false,
+            scale: this.minimum
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.open === this.state.open)
-            return;
-        this.setState({
-            ...this.state,
-            open:nextProps.open
-        })
-        this._renderModal(nextProps.open);
+    componentWillMount() {
+        console.log("componentWillMount", arguments);
     }
 
-    _renderModal(open){
+    componentDidMount() {
+        console.log("componentDidMount", arguments);
+        // this._open();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log("componentWillReceiveProps", arguments);
+        if (nextProps.open === this.state.open)
+            return;
+        nextProps.open ? this._open() : this._close();
+    }
+
+    _renderModal(open) {
         this.node || this._firstInit();
 
-        var wrapperClassName = classNames(style.modal_wrapper);
-        if(open){
-            wrapperClassName = classNames(style.modal_wrapper,style.in);
+        var wrapperClassName = classNames(style.modal_wrapper, {[style.in]: open});
+
+        var {scale} = this.state;
+        var scaleStyle = {
+            transform: `scale(${scale})`
         }
 
         this.modal = (
             <div className={wrapperClassName} onClick={this.onMaskClickHandler.bind(this)}>
-                <div className={style.modal_container} onClick={this.onModalClickHandler.bind(this)}>
+                <div className={style.modal_container} onClick={this.onModalClickHandler.bind(this)} style={scaleStyle}>
                     <ModalHeader title={this.props.title} cancelHandler={this.defaultCancelHandler.bind(this)}/>
                     {this.props.children}
-                    <ModalFooter comfirmHandler={this.defaultComfirmHandler.bind(this)} cancelHandler={this.defaultCancelHandler.bind(this)}/>
+                    <ModalFooter comfirmHandler={this.defaultComfirmHandler.bind(this)}
+                                 cancelHandler={this.defaultCancelHandler.bind(this)}/>
                 </div>
             </div>
         )
@@ -48,15 +59,15 @@ export default class Modal extends Component {
         ReactDOM.render(this.modal, this.node)
     }
 
-    _firstInit(){
+    _firstInit() {
         this.node = document.createElement('div');
         this.node.className = 'ReactModal';
         document.body.appendChild(this.node);
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        console.log("shouldComponentUpdate",nextProps, nextState,this.state);
-        if(nextState.open == this.state.open){
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("shouldComponentUpdate", arguments);
+        if (nextState.open == this.state.open) {
             return false;
         }
 
@@ -65,30 +76,76 @@ export default class Modal extends Component {
 
     }
 
-    onMaskClickHandler(){
-        this.setState({
-            ...this.state,
-            open:false
-        })
+    componentWillUpdate() {
+        console.log("componentWillUpdate", arguments);
     }
 
-    onModalClickHandler(event){
+    componentDidUpdate() {
+        console.log("componentDidUpdate", arguments);
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount", arguments);
+    }
+
+    onMaskClickHandler() {
+        this._close();
+    }
+
+    onModalClickHandler(event) {
         event.stopPropagation()
         event.nativeEvent.stopPropagation();
     }
 
-    defaultComfirmHandler(){
-        this.setState({
-            ...this.state,
-            open:false
-        })
+    defaultComfirmHandler() {
+        this._close();
     }
 
-    defaultCancelHandler(){
+    defaultCancelHandler() {
+        this._close();
+    }
+
+    _open = () => {
         this.setState({
-            ...this.state,
-            open:false
+            scale: this.minimum,
+            open: true
         })
+        var id = setInterval(() => {
+            var {scale} = this.state;
+            if (scale < 1) {
+                scale += 0.3;
+                this.setState({
+                    scale: scale
+                })
+            } else {
+                this.setState({
+                    scale: 1
+                })
+
+                clearInterval(id);
+            }
+            this._renderModal(true);
+        }, 16)
+    }
+
+    _close = () => {
+        var id = setInterval(() => {
+            var {scale} = this.state;
+            if (scale > this.minimum) {
+                scale -= 0.3;
+                this.setState({
+                    scale: scale
+                })
+                this._renderModal(true);
+            } else {
+                this.setState({
+                    scale: this.minimum,
+                    open: false
+                })
+                this._renderModal(false);
+                clearInterval(id);
+            }
+        }, 16)
     }
 
     render() {

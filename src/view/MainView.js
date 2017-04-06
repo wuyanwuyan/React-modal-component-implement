@@ -19,7 +19,7 @@ export default class MainView extends React.Component{
     render(){
         return(
             <div>
-                <button onClick={()=>(this.onBtnClick())}>
+                <button onClick={()=>(this.onBtnClick())} style={{fontSize:"18px"}}>
                     show modal
                 </button>
                 <Modal open={this.state.open} title="dialog Name">
